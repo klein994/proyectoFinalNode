@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container " style="padding: 50px">
+        <div class="row">
+            <div class="col-md-4" style="padding: 15px;background-color: #efefef;border-radius: 5px">
+                <h3>INGRESAR NUEVO ARTÍCULO</h3>
+                <form action="http://localhost:8080/api/productos" method="post">
+                    <div class="form-group">
+                        <label>Nombre:</label>
+                        <input type="text" id="title" name="title" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Precio:</label>
+                        <input type="number" id="price" name="price" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Imagen Url:</label>
+
+                        <select name="thumbnail" id="thumbnail" required class="form-control">
+                            <option selected disabled  value="">Seleccionar imagen</option>
+                            <option  value="https://cdn3.iconfinder.com/data/icons/education-209/64/plane-paper-toy-science-school-256.png">avión</option>
+                            <option value="https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-128.png">Globo terráqueo</option>
+                            <option  value="https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-128.png">Calculadora</option>
+                            <option  value="https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png">Reglas</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" id="botonEnviar" class="btn btn-md btn-success btn-block">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

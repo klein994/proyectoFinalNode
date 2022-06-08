@@ -1,0 +1,85 @@
+{{#if hayProductos}}
+
+<h2>Lista de Articulos</h2>
+
+<div class="table-responsive">
+  <table class="table table-hover table-striped">
+    <tr>
+      <th>ID</th>
+      <th>Imagen</th>
+      <th>Nombre</th>
+      <th>Precio</th>
+      <th>Eliminar</th>
+    </tr>
+    {{#each productosN}}
+    <tr>
+      <td>{{this.id}}</td>
+      <td><img src="{{this.thumbnail}}" width="40" alt="" /></td>
+      <td>{{this.title}}</td>
+      <td>{{this.price}}</td>
+      <td>
+        <form action="http://localhost:8080/api/carrito/" method="post">
+          <input type="hidden" name="tittle" value="{{this.title}}" />
+          <input type="hidden" name="price" value="{{this.price}}" />
+          <input type="hidden" name="thumbnail" value="{{this.thumbnail}}" />
+          <input type="hidden" name="id" value="{{this.id}}" />
+          <button id="añadir_a_carrito" type="submit" class="btn btn-primary">Añadir a Carrito</button>
+        </form>
+      </td>
+    </tr>
+    {{/each}}
+  </table>
+</div>
+{{else}}
+<p class="alert alert-warning">No hay Artículos para mostrar...</p>
+{{/if}}
+{{#if hayCarrito}}
+
+<h2>Lista Carrito</h2>
+
+<div class="table-responsive">
+  <table class="table table-hover table-striped">
+    <tr>
+      <th>Carrito</th>
+      <th>Productos</th>
+
+      <th>Eliminar</th>
+    </tr>
+    {{#each carritoN}}
+    <tr>
+      <td>{{this.id}}</td>
+
+      <td style="padding: 0;" >
+        <table class="table" style="padding: 0;">
+          <tr>
+            <th>ID</th>
+            <th>Imagen</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+          </tr>
+          {{#each this.productos}}
+          <tr>
+            <td>{{this.id}}</td>
+            <td><img src="{{this.thumbnail}}" width="40" alt="" /></td>
+            <td>{{this.tittle}}</td>
+            <td>{{this.price}}</td>
+            
+
+            {{/each}}
+        </table>
+      </td>
+
+      <td>
+        <form action="http://localhost:8080/api/carrito/{{this.id}}" method="post">
+        <input type="hidden" name="_method" value="DELETE">
+    <input type="submit" class="btn btn-danger" value="Eliminar">
+          
+        </form>
+      </td>
+    </tr>
+    {{/each}}
+  </table>
+</div>
+{{else}}
+<p class="alert alert-warning">No hay Artículos en el Carrito para mostrar...</p>
+{{/if}}
