@@ -71,7 +71,8 @@
 
       <td>
         <form action="http://localhost:8080/api/carrito/{{this.id}}" method="post">
-        <input type="hidden" name="_method" value="DELETE">
+        <input type="hidden" id="carritoDelete" name="cId" value="DELETE">
+        <input type="hidden"  name="pdrId" value="DELETE">
     <input type="submit" class="btn btn-danger" value="Eliminar">
           
         </form>

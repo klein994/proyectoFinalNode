@@ -1,4 +1,6 @@
 const { databaseCarritos } = require("../database/databaseCarrito.js")
+const {response} = require("express");
+const {databaseProductos} = require("../database/databaseProductos");
 const carritoController = {
     root: (req, res) => {
         res.redirect('/api/productos');
@@ -39,45 +41,38 @@ const carritoController = {
         let id = parseInt(req.params.id)
         res.json(databaseCarritos.getOne(id))
     },
-    updateOne: (req, res) => {
-        let id = parseInt(req.params.id)
-        let obj = {
-            "tittle": req.body.tittle,
-            "price": req.body.price,
-            "thumbnail": req.body.thumbnail,
-            "id": id
-        }
-        res.json(databaseCarritos.update(obj))
-    },
-    deleteOne: (req, res) => {
-        let id = parseInt(req.params.id)
+    updateOne: async(req, res) => {
 
-        async function borrar(id) {
-            try {
-                let g = await databaseCarritos.delete(id)
-                let response = await res.redirect('/index')
-            } catch (err) {
-                console.log(err)
+            let contenido = await this.getAll();
+            let productoBuscado = contenido.find(producto => producto.id == id);
+            if(!productoBuscado) {
+                const error = new Error('No existe un producto con ese id')
+                error.tipo = 'Product not found'
+                throw error;
             }
+            Object.keys(producto).forEach(el => {
+                productoBuscado[el]=producto[el];
+            });
+            await sobreescribrirArchivo(this.nombreArchivo, contenido);
+            return productoBuscado;
 
-            return response
-        }
-        borrar(id)
     },
-    deleteAll: (req, res) => {
-        let id = parseInt(req.params.id)
-
-        async function borrar(id) {
-            try {
-                let g = await databaseCarritos.delete(id)
-                let response = await res.redirect('/index')
-            } catch (err) {
-                console.log(err)
-            }
-
-            return response
+    deleteOne: async (req, res) => {
+        const carritoID = req.params.cId;
+        const productoID = req.params.prdId;
+        const cartToDelete = await databaseCarritos.getById(databaseProductos.id.productos.id);
+        if(cartToDelete.productos.includes(productoID)){
+            cartToDelete.productos = cartToDelete.productos.filter(producto => producto !== productoID);
+            databaseProductos.update(carritoID, cartToDelete);
         }
-        borrar(id)
+        res.json(cartToDelete);
+    },
+    deleteAll:  async (req, res) => {
+        const carritoID = req.params.cId;
+        const cartToDelete = await databaseCarritos.getOne(carritoID);
+        databaseCarritos.id.productos = [];
+        carritos.updateById(carritoID, cartToDelete);
+        res.json(cartToDelete);
     }
 }
 
